@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Flipper</title>
+</head>
+<body>
+  <!-- Main container with responsive width constraints -->
+  <div class="flip-wrapper">
+    <!-- 3D perspective container for flip effect -->
+    <div class="flip-container">
+      <!-- Element that will perform the flip transformation -->
+      <div class="flipper">
+        <!-- Front face - contains the image -->
+        <div class="flip-front">
+          <img src="cute_dog.png" alt="Adorable golden retriever puppy" class="flip-image" />
+        </div>
+        <!-- Back face - contains descriptive text, This is important I'll try fix this to use just the ALT that exists in image -->
+        <div class="flip-back">
+          <p>Adorable golden retriever puppy playing in the garden</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<style>
+  /* Basic reset for consistent styling */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Responsive container with max-width */
+  .flip-wrapper {
+    width: calc(100% - 40px); /* Full width minus margins */
+    max-width: 600px; /* Maximum width on larger screens */
+    margin: 20px auto; /* Vertical and horizontal centering */
+  }
+
+  /* 3D effect container */
+  .flip-container {
+    perspective: 1000px; /* Depth of 3D space */
+    width: 100%;
+    height: 400px; /* Fixed height for demo - adjust as needed */
+    position: relative; /* Positioning context for absolute children */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)); /* Subtle outer shadow */
+  }
+
+  /* Element that rotates on hover */
+  .flipper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s; /* Smooth flip animation */
+    transform-style: preserve-3d; /* Maintain 3D during transformation */
+  }
+
+  /* Flip animation trigger, HERE WE HAVE THE EFFECT */
+  .flip-container:hover .flipper {
+    transform: rotateY(180deg); /* 180 degree rotation on Y-axis */
+  }
+
+  /* Shared styles for both faces */
+  .flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide backface during rotation */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05); /* Inner shadow for depth */
+  }
+
+  /* Front face specific styles */
+  .flip-front {
+    background: #eee; /* Fallback background */
+    z-index: 2; /* Ensure front stays above back */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Outer shadow */
+    overflow: hidden; /* Contain image within bounds */
+  }
+
+  /* Back face specific styles */
+  .flip-back {
+    background: white;
+    border: 1px solid #f0f0f0; /* Light border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg); /* Start flipped */
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+  }
+
+  /* Image styling */
+  .flip-image {
+    min-width: 100%; /* Force full width */
+    min-height: 100%; /* Force full height */
+    object-fit: cover; /* Maintain aspect ratio while filling space */
+    border-radius: 6px; /* Slightly rounded corners */
+  }
+</style>
